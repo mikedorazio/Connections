@@ -1,0 +1,56 @@
+const cdata = [
+    {id: 0, hint: 'NY', category: 'State'},
+    {id: 1, hint: 'NJ', category: 'State'},
+    {id: 2, hint: 'FL', category: 'State'},
+    {id: 3, hint: 'RI', category: 'State'},
+    {id: 4, hint: 'Red', category: 'Colors'},
+    {id: 5, hint: 'Blue', category: 'Colors'},
+    {id: 6, hint: 'Green', category: 'Colors'},
+    {id: 7, hint: 'Orange', category: 'Colors'},
+    {id: 8, hint: 'Circle', category: 'Shapes'},
+    {id: 9, hint: 'Octogon', category: 'Shapes'},
+    {id: 10, hint: 'Square', category: 'Shapes'},
+    {id: 11, hint: 'Trapazoid', category: 'Shapes'},
+    {id: 12, hint: 'Butter', category: 'Ingredients'},
+    {id: 13, hint: 'Flour', category: 'Ingredients'},
+    {id: 14, hint: 'Sugar', category: 'Ingredients'},
+    {id: 15, hint: 'Eggs', category: 'Ingredients'},
+    {id: 16, hint: 'Cream', category: 'Classic Rock Bands'},
+    {id: 17, hint: 'Free', category: 'Classic Rock Bands'},
+    {id: 18, hint: 'Yes', category: 'Classic Rock Bands'},
+    {id: 19, hint: 'Heart', category: 'Classic Rock Bands'},
+    {id: 20, hint: 'Civic', category: 'Palindromes'},
+    {id: 21, hint: 'Level', category: 'Palindromes'},
+    {id: 22, hint: 'Radar', category: 'Palindromes'},
+    {id: 23, hint: 'Racecar', category: 'Palindromes'},
+    {id: 24, hint: 'Super', category: '___ Man Hero'},
+    {id: 25, hint: 'Spider', category: '___ Man Hero'},
+    {id: 26, hint: 'Bat', category: '___ Man Hero'},
+    {id: 27, hint: 'Iron', category: '___ Man Hero'},
+    {id: 28, hint: 'Eddie', category: 'Munster Characters'},
+    {id: 20, hint: 'Lily', category: 'Munster Characters'},
+    {id: 30, hint: 'Spot', category: 'Munster Characters'},
+    {id: 31, hint: 'Grandpa', category: 'Munster Characters'},
+    {id: 32, hint: 'Munster', category: 'Cheese'},
+    {id: 33, hint: 'Swiss', category: 'Cheese'},
+    {id: 34, hint: 'Cheddar', category: 'Cheese'},
+    {id: 35, hint: 'American', category: 'Cheese'},
+    {id: 36, hint: 'Cow', category: 'Holy Phrases'},
+    {id: 37, hint: 'Moly', category: 'Holy Phrases'},
+    {id: 38, hint: 'Smokes', category: 'Holy Phrases'},
+    {id: 39, hint: 'Roller', category: 'Holy Phrases'},
+];
+
+export const categoryData = [
+    'State', //0
+    'Colors', //1
+    'Shapes', //2
+    'Ingredients', //3
+    'Classic Rock Bands', //4
+    'Palindromes', //5
+    '___ Man Hero', //6
+    'Munster Characters', //7
+    'Cheese' //8
+];
+
+export default cdata;
