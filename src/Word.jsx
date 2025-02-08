@@ -1,5 +1,5 @@
 export default function Word({ position, hint, isHintSelected }) {
-    console.log("key:", position);
+    //console.log("key:", position);
 
     return (
         <div className="word" position={position}>

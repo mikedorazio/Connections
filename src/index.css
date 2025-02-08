@@ -162,3 +162,49 @@ label.flip {
         transform: scaleY(1);
     }
 }
+
+.answer-container {
+    background-color: thistle;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    display: grid;
+    width: 700px;
+    /* padding: 5px; */
+    /* display: none; */
+    display: grid;
+    grid-template-columns: 1fr;
+    /* grid-template-rows: repeat(4, 1fr); */
+    grid-row-gap: 10px;
+    justify-content: center;
+}
+section {
+    width: 640px;
+    height: 80px;
+    margin-bottom: 2px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 80px;
+    text-transform: uppercase;
+    justify-content: center;
+    margin: 0 auto;
+}
+section[datalevel="0"] {
+    display: none;
+    background-color: #b0c4ef;
+}
+section[datalevel="1"] {
+    display: none;
+    background-color: #f9df6d;
+}
+section[datalevel="2"] {
+    display: none;
+    background-color: #a0c35a;
+}
+section[datalevel="3"] {
+    display: none;
+    background-color: #861cab;
+}

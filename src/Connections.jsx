@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Word from "./Word";
 import useConnections from "./hooks/useConnections";
+import AnswerGrid from "./AnswerGrid";
 import Options from "./Options";
 import Mistakes from "./Mistakes";
 
@@ -62,11 +63,19 @@ export default function Connections({ data, categoryData }) {
 
     return (
         <>
-            <div className="word-container">
+             <div className="answer-container" >
+                { answerCategories.map((answer,index) => {
+                    console.log(answer);
+                    return <AnswerGrid key={index} answer={answerCategories[index]} index={index} />
+                })}
+
+            </div>
+
+            <div className="word-container" id="word-container">
                 {randomHintOrder.map((hint, i) => {
                     let isHintSelected = currentSelections.includes(''+ todaysHintData[hint].id);
-                    console.log("currentSelections", currentSelections, "hint", todaysHintData[hint].id, "isSelected", isHintSelected);
-                    return <Word position={i} hint={todaysHintData[hint]} isHintSelected={isHintSelected} />;
+                    //console.log("currentSelections", currentSelections, "hint", todaysHintData[hint].id, "isSelected", isHintSelected);
+                    return <Word key={i} position={i} hint={todaysHintData[hint]} isHintSelected={isHintSelected} />;
                 })}
             </div>
 

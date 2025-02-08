@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 const useConnections = (todaysHintData, categoryData) => {
     //console.log("useConnection().answer: ", todaysHintData);
     const [selectionCount, setSelectionCount] = useState(0); // number of current selections in grid
-    const [initFlag, setInitFlag] = useState(true); // flag to set up data to start the puzzle
+    //const [initFlag, setInitFlag] = useState(true); // flag to set up data to start the puzzle
     const [currentSelections, setCurrentSelections] = useState([]); // names of current selections (need???)
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [isDeselectDisabled, setIsDeselectDisabled] = useState(true);
     const [randomHintOrder, setRandomHintOrder] = useState(calculateRandomHintOrder); // random order of the 16 hints
     const [mistakesRemaining, setMistakesRemaining] = useState(4);
     const [previousGuesses, setPreviousGuesses] = useState([]);
+    const [correctAnswersGiven, setCorrectAnswersGiven] = useState(0); // how many correct answers have been given
     console.log("useConnections.todaysHintData:", todaysHintData);
 
     // the random array of numbers that hold the display order of hints [4, 7, 13, 9, 2, 11, 1, 10, 8, 5, 6, 0, 15, 14, 3, 12]
@@ -79,6 +80,100 @@ const useConnections = (todaysHintData, categoryData) => {
                 label.classList.remove(classValue);
             });
         }, 2000);
+    }
+
+    function swapEntries(fromElement, toElement, containerElement) {
+        const nextSibling = fromElement.nextSibling;
+        // FIRST: get the current bounds
+        const fromRect = fromElement.getBoundingClientRect();
+        const toRect = toElement.getBoundingClientRect();
+        // Last
+        containerElement.insertBefore(fromElement, toElement);
+        containerElement.insertBefore(toElement, nextSibling);
+        const fromRectLast = fromElement.getBoundingClientRect();
+        const toRectLast = toElement.getBoundingClientRect();
+        // Invert 
+        const fromDeltaX = fromRect.left - fromRectLast.left;
+        const fromDeltaY = fromRect.top - fromRectLast.top;
+        //console.log("creamDeltaX", creamDeltaX, "creamDeltaY", creamDeltaY);
+        const toDeltaX = toRect.left - toRectLast.left;
+        const toDeltaY = toRect.top - toRectLast.top;
+
+        fromElement.animate([{
+            transformOrigin: 'top left',
+            transform: `
+              translate(${fromDeltaX}px, ${fromDeltaY}px)
+            `
+          }, {
+            transformOrigin: 'top left',
+            transform: 'none'
+          }], {
+            duration: 300,
+            easing: 'ease-in-out',
+            fill: 'both'
+          });
+
+          toElement.animate([{
+            transformOrigin: 'top left',
+            transform: `
+              translate(${toDeltaX}px, ${toDeltaY}px)
+            `
+          }, {
+            transformOrigin: 'top left',
+            transform: 'none'
+          }], {
+            duration: 300,
+            easing: 'ease-in-out',
+            fill: 'both'
+          });
+    }
+
+    function moveUpSuccessfulEntries() {
+        // loop through the first 4 <div> tags and swap it out with a currently selected answer if it is not selected
+        const wordContainer = document.getElementById("word-container");
+        const childDivs = wordContainer.querySelectorAll('div');
+        console.log("childDivs", childDivs);
+        let j = 4;
+        for (let i = 0; i < 4; i++) {
+            const firstChild = childDivs[i].firstChild;
+            const isAnswer = firstChild.classList.contains('selected');
+            if (!isAnswer) {
+                // first line entry is not an answer...swap it out for an answer that is not on the first line
+                for (; j < 16; j++) {
+                    if (childDivs[j].firstChild.classList.contains('selected')) {
+                        console.log("swapping", childDivs[i], childDivs[j]);
+                        swapEntries(childDivs[i], childDivs[j], wordContainer);
+                        j++;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+     
+    function moveUpSuccessfulEntries2() {
+        console.log("moveUpSuccessfulEntries.randomHintOrder", randomHintOrder);
+        // determine the current rows of the 4 selected entries. Only non first row entries need to be moved
+        const selectedLabels = document.querySelectorAll('[class*="selected"]');
+        console.log("moveUpSuccessfulEntries.labels", selectedLabels);
+        //let correctElements = wordContainer.querySelectorAll('div:has(> label.selected)');
+        const firstRowPositions = ["0", "1", "2", "3"];
+        let entriesInFirstRow = [];
+        const entryPositions = [];
+        selectedLabels.forEach((label) => {
+            const parentDiv = label.parentElement;
+            let position = parentDiv.getAttribute("position");
+            console.log("moveUpSuccessfulEntries.parentDiv", parentDiv, "position", position);
+            if (firstRowPositions.includes(position)) {
+                console.log(parentDiv, "is in the first row");
+                entriesInFirstRow.push(parentDiv);
+                entryPositions.push(position);
+            }
+        });
+        console.log("moveUpSuccessful.entriesInFirstRow", entriesInFirstRow, "entryPositions", entryPositions);
+        
+        // pair up first row non selections with non first row selectios
+        // exchange them using FLIP method
     }
 
     // unselect every button
@@ -181,9 +276,9 @@ const useConnections = (todaysHintData, categoryData) => {
                     //putting this after the toast call it did not work...
                     setIsSubmitDisabled(true);
                     // Correct Guess - Check if Game Over
-                    toast.success("Great Job!!!", { autoClose: 2000 });
-                    bounceCorrectGuesses();
-                    //moveUpSuccessfulEntries();
+                    toast.success("Great Job!!! 😎", { autoClose: 2000 });
+                    //bounceCorrectGuesses();
+                    moveUpSuccessfulEntries();
                     //setIsSubmitDisabled(true);
                 } else {
                     // Wrong Guess:

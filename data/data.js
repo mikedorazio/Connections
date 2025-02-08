@@ -28,7 +28,7 @@ const cdata = [
     {id: 26, hint: 'Bat', category: '___ Man Hero'},
     {id: 27, hint: 'Iron', category: '___ Man Hero'},
     {id: 28, hint: 'Eddie', category: 'Munster Characters'},
-    {id: 20, hint: 'Lily', category: 'Munster Characters'},
+    {id: 29, hint: 'Lily', category: 'Munster Characters'},
     {id: 30, hint: 'Spot', category: 'Munster Characters'},
     {id: 31, hint: 'Grandpa', category: 'Munster Characters'},
     {id: 32, hint: 'Munster', category: 'Cheese'},
