@@ -1,8 +1,8 @@
 const cdata = [
-    {id: 0, hint: 'NY', category: 'State'},
-    {id: 1, hint: 'NJ', category: 'State'},
-    {id: 2, hint: 'FL', category: 'State'},
-    {id: 3, hint: 'RI', category: 'State'},
+    {id: 0, hint: 'NY', category: 'States'},
+    {id: 1, hint: 'NJ', category: 'States'},
+    {id: 2, hint: 'FL', category: 'States'},
+    {id: 3, hint: 'RI', category: 'States'},
     {id: 4, hint: 'Red', category: 'Colors'},
     {id: 5, hint: 'Blue', category: 'Colors'},
     {id: 6, hint: 'Green', category: 'Colors'},
@@ -39,10 +39,14 @@ const cdata = [
     {id: 37, hint: 'Moly', category: 'Holy Phrases'},
     {id: 38, hint: 'Smokes', category: 'Holy Phrases'},
     {id: 39, hint: 'Roller', category: 'Holy Phrases'},
+    {id: 40, hint: 'Help', category: 'Beatles Songs'},
+    {id: 41, hint: 'Because', category: 'Beatles Songs'},
+    {id: 42, hint: 'Boys', category: 'Beatles Songs'},
+    {id: 43, hint: 'Birthday', category: 'Beatles Songs'},
 ];
 
 export const categoryData = [
-    'State', //0
+    'States', //0
     'Colors', //1
     'Shapes', //2
     'Ingredients', //3
@@ -50,7 +54,9 @@ export const categoryData = [
     'Palindromes', //5
     '___ Man Hero', //6
     'Munster Characters', //7
-    'Cheese' //8
+    'Cheese', //8
+    'Holy Phrases', // 9
+    'Beatles Songs'
 ];
 
 export default cdata;

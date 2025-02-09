@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const useConnections = (todaysHintData, categoryData) => {
+const useConnections = (todaysHintData, categoryData, answerCategories) => {
     //console.log("useConnection().answer: ", todaysHintData);
     const [selectionCount, setSelectionCount] = useState(0); // number of current selections in grid
-    //const [initFlag, setInitFlag] = useState(true); // flag to set up data to start the puzzle
-    const [currentSelections, setCurrentSelections] = useState([]); // names of current selections (need???)
+    const [currentSelections, setCurrentSelections] = useState([]); // id of current selections ['6', '4', '7', '5']
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     const [isDeselectDisabled, setIsDeselectDisabled] = useState(true);
     const [randomHintOrder, setRandomHintOrder] = useState(calculateRandomHintOrder); // random order of the 16 hints
     const [mistakesRemaining, setMistakesRemaining] = useState(4);
     const [previousGuesses, setPreviousGuesses] = useState([]);
     const [correctAnswersGiven, setCorrectAnswersGiven] = useState(0); // how many correct answers have been given
+    const [isGameOver, setIsGameOver] = useState(false);
     console.log("useConnections.todaysHintData:", todaysHintData);
 
     // the random array of numbers that hold the display order of hints [4, 7, 13, 9, 2, 11, 1, 10, 8, 5, 6, 0, 15, 14, 3, 12]
@@ -79,9 +79,10 @@ const useConnections = (todaysHintData, categoryData) => {
             labels.forEach((label) => {
                 label.classList.remove(classValue);
             });
-        }, 2000);
+        }, 1000);
     }
 
+    // use FLIP technique to exchange hint positions
     function swapEntries(fromElement, toElement, containerElement) {
         const nextSibling = fromElement.nextSibling;
         // FIRST: get the current bounds
@@ -128,6 +129,34 @@ const useConnections = (todaysHintData, categoryData) => {
           });
     }
 
+    function removeTopAnswerRow() {
+        const wordContainer = document.getElementById("word-container");
+        wordContainer.removeChild(wordContainer.children[0]);
+        wordContainer.removeChild(wordContainer.children[0]);
+        wordContainer.removeChild(wordContainer.children[0]);
+        wordContainer.removeChild(wordContainer.children[0]);
+        let answersGiven = correctAnswersGiven + 1;
+        let height = 360 - (80 * answersGiven);
+        wordContainer.style.height = `${height}px`;
+        setCorrectAnswersGiven(prev => prev + 1);
+    }
+
+    // displays a hidden answer section after a correct guess
+    function showAnswerLevel(answerCategoryIndex) {
+        let anyCurrentSelection = currentSelections[0];
+        let entry = todaysHintData.find((hint) => hint.id == parseInt(anyCurrentSelection));
+        const entryCategory = entry.category;
+        const categoryIndex = categoryData.indexOf(entryCategory);
+        console.log("showAnswerLevel.entry", anyCurrentSelection, entry.category, categoryIndex, answerCategories);
+        const level = answerCategories.indexOf(entryCategory);
+        //const level = correctAnswersGiven;
+        let element = document.querySelector(`[datalevel="${level}"]`); 
+        console.log("showAnswerLevel.element", element); 
+        element.style.display = "inline";
+        element.style.order = correctAnswersGiven;
+        // bounce animation can go here for answer just displayed
+    }
+
     function moveUpSuccessfulEntries() {
         // loop through the first 4 <div> tags and swap it out with a currently selected answer if it is not selected
         const wordContainer = document.getElementById("word-container");
@@ -150,33 +179,8 @@ const useConnections = (todaysHintData, categoryData) => {
             }
         }
     }
-     
-    function moveUpSuccessfulEntries2() {
-        console.log("moveUpSuccessfulEntries.randomHintOrder", randomHintOrder);
-        // determine the current rows of the 4 selected entries. Only non first row entries need to be moved
-        const selectedLabels = document.querySelectorAll('[class*="selected"]');
-        console.log("moveUpSuccessfulEntries.labels", selectedLabels);
-        //let correctElements = wordContainer.querySelectorAll('div:has(> label.selected)');
-        const firstRowPositions = ["0", "1", "2", "3"];
-        let entriesInFirstRow = [];
-        const entryPositions = [];
-        selectedLabels.forEach((label) => {
-            const parentDiv = label.parentElement;
-            let position = parentDiv.getAttribute("position");
-            console.log("moveUpSuccessfulEntries.parentDiv", parentDiv, "position", position);
-            if (firstRowPositions.includes(position)) {
-                console.log(parentDiv, "is in the first row");
-                entriesInFirstRow.push(parentDiv);
-                entryPositions.push(position);
-            }
-        });
-        console.log("moveUpSuccessful.entriesInFirstRow", entriesInFirstRow, "entryPositions", entryPositions);
-        
-        // pair up first row non selections with non first row selectios
-        // exchange them using FLIP method
-    }
 
-    // unselect every button
+    // unselect every hint button
     function deselectAllButtons(event) {
         const inputs = document.querySelectorAll("input");
         inputs.forEach((input) => {
@@ -221,6 +225,14 @@ const useConnections = (todaysHintData, categoryData) => {
         });
         console.log("isDupGuess.guessSet", guessSet, "isDupGuess.guessSetCount", guessSetCount);
         return duplicateFound;
+    }
+
+    function endGame() {
+        // disable Shuffle button
+        const shuffleElement = document.getElementById("shuffle");
+        shuffleElement.disabled = true;
+        setIsGameOver(true);
+        // hide Mistakes component
     }
 
     // handle the event of a clue being selected
@@ -277,9 +289,21 @@ const useConnections = (todaysHintData, categoryData) => {
                     setIsSubmitDisabled(true);
                     // Correct Guess - Check if Game Over
                     toast.success("Great Job!!! 😎", { autoClose: 2000 });
-                    //bounceCorrectGuesses();
-                    moveUpSuccessfulEntries();
-                    //setIsSubmitDisabled(true);
+                    bounceCorrectGuesses();
+                    setTimeout(() => {
+                        moveUpSuccessfulEntries();
+                        setTimeout(() => {
+                            removeTopAnswerRow();
+                            showAnswerLevel();
+                            deselectAllButtons();
+                            setIsSubmitDisabled(true);
+                            console.log("correctAnswersGiven", correctAnswersGiven)
+                            if (correctAnswersGiven == 3) {
+                                console.log("game over...win");
+                                endGame();
+                            }
+                        }, 1500);
+                    }, 1500);
                 } else {
                     // Wrong Guess:
                     toast.warning("OUCH!! 😕", { autoClose: 2000 });
@@ -304,7 +328,8 @@ const useConnections = (todaysHintData, categoryData) => {
         isDeselectDisabled,
         randomHintOrder,
         mistakesRemaining,
-        currentSelections
+        currentSelections,
+        isGameOver
     };
 };
 

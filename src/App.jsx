@@ -10,7 +10,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [initFlag, setInitFlag] = useState(true);
 
-    console.log(wordData, categoryData);
+    //console.log(wordData, categoryData);
     // TOFIX: this is unecessary...put inits in useState() above
     if (initFlag) {
         setData(wordData);

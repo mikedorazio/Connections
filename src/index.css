@@ -6,6 +6,7 @@ body {
 }
 .header {
   padding: 30px;
+  font-size: 1.2em;
 }
 .app-container {
   width: 700px;
@@ -25,7 +26,7 @@ body {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 160px);
-  grid-column-gap: 20px;
+  grid-column-gap: 5px;
 }
 .word {
   text-align: center;
@@ -81,8 +82,22 @@ input:checked + span {
   margin: 4px;
   cursor: pointer;
   border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: 700;
 }
-
+.shuffle-button,
+.deselect-all-button {
+    background-color: white;
+    color: black;
+}
+.deselect-all-button {
+    width: 140px;
+}
+.shuffle-button:disabled,
+.deselect-all-button:disabled {
+    cursor: auto;
+    color: #979797;
+}
 .submit-button {
   background-color: black;
   color: white;
@@ -164,7 +179,7 @@ label.flip {
 }
 
 .answer-container {
-    background-color: thistle;
+    background-color: white;
     text-align: center;
     justify-content: center;
     margin: 0 auto;
@@ -179,11 +194,11 @@ label.flip {
     justify-content: center;
 }
 section {
-    width: 640px;
+    width: 650px;
     height: 80px;
     margin-bottom: 2px;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     align-items: center;
     vertical-align: middle;
