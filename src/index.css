@@ -210,16 +210,20 @@ section {
 section[datalevel="0"] {
     display: none;
     background-color: #b0c4ef;
+    animation: bounce 1.0s 0.5s ease forwards;
 }
 section[datalevel="1"] {
     display: none;
     background-color: #f9df6d;
+    animation: bounce 1.0s 0.5s ease forwards;
 }
 section[datalevel="2"] {
     display: none;
     background-color: #a0c35a;
+    animation: bounce 1.0s 0.5s ease forwards;
 }
 section[datalevel="3"] {
     display: none;
     background-color: #861cab;
+    animation: bounce 1.0s 0.5s ease forwards;
 }

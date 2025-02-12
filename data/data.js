@@ -43,6 +43,18 @@ const cdata = [
     {id: 41, hint: 'Because', category: 'Beatles Songs'},
     {id: 42, hint: 'Boys', category: 'Beatles Songs'},
     {id: 43, hint: 'Birthday', category: 'Beatles Songs'},
+    {id: 44, hint: 'Page', category: 'Guitar Greats'},
+    {id: 45, hint: 'King', category: 'Guitar Greats'},
+    {id: 46, hint: 'Beck', category: 'Guitar Greats'},
+    {id: 47, hint: 'Young', category: 'Guitar Greats'},
+    {id: 48, hint: 'Dust', category: 'Sprinkle'},
+    {id: 49, hint: 'Pepper', category: 'Sprinkle'},
+    {id: 50, hint: 'Scatter', category: 'Sprinkle'},
+    {id: 51, hint: 'Shower', category: 'Sprinkle'},
+    {id: 52, hint: 'Aunt', category: 'Words Pronounced Differently'},
+    {id: 53, hint: 'Either', category: 'Words Pronounced Differently'},
+    {id: 54, hint: 'Tomato', category: 'Words Pronounced Differently'},
+    {id: 55, hint: 'Vase', category: 'Words Pronounced Differently'},
 ];
 
 export const categoryData = [
@@ -56,7 +68,10 @@ export const categoryData = [
     'Munster Characters', //7
     'Cheese', //8
     'Holy Phrases', // 9
-    'Beatles Songs'
+    'Beatles Songs', // 10
+    'Guitar Greats',  // 11
+    'Sprinkle', // 12
+    'Words Pronounced Differently' //13
 ];
 
 export default cdata;
