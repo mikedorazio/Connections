@@ -5,17 +5,7 @@ import wordData, {categoryData} from "../data/data.js";
 import { ToastContainer, Flip } from "react-toastify";
 
 function App() {
-    const [data, setData] = useState();
-    const [categories, setCategories] = useState();
-    const [isLoading, setIsLoading] = useState(false);
-    const [initFlag, setInitFlag] = useState(true);
-
-    //console.log(wordData, categoryData);
-    // TOFIX: this is unecessary...put inits in useState() above
-    if (initFlag) {
-        setData(wordData);
-        setInitFlag(false);
-    }
+    const [data, setData] = useState(wordData);
 
     return (
         <>
